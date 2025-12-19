@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Sempro Anik!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS GABUNGAN */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 20px;
+            transition: opacity 0.5s ease;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            margin: 0 auto 20px;
+            border: 2px solid #eaeaea;
+        }
+
+        h1 { color: #333; margin-bottom: 10px; font-size: 1.5rem; }
+        h2 { color: #e91e63; margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; }
+        
+        p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            min-height: 80px; /* Space buat teks ngetik */
+        }
+
+        /* Tombol Utama */
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        .btn-repeat {
+            background-color: #e91e63;
+        }
+        
+        .btn-repeat:hover {
+            background-color: #c2185b;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-screen" class="container">
+        <h1>Hai, Anik Nurul Faradila! 👋</h1>
+        <p style="margin-bottom: 20px;">Ada pesan spesial buat kamu yang habis Sempro nih.</p>
+        <button onclick="bukaPesan()">💌 Buka Pesan</button>
+    </div>
+
+    <div id="message-screen" class="container hidden">
+        <div class="card">
+            <h1>🎉 Happy Sempro! 🎉</h1>
+            <h2>Anik Nurul Faradila</h2>
+            <p id="typing-text"></p> <div class="footer">
+                <small>From: El Syaja'ah</small>
+            </div>
+        </div>
+        <button class="btn-repeat" onclick="ulangiConfetti()">Rayakan Lagi! 🎊</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // JAVASCRIPT GABUNGAN
+        const messageText = "Selamat yaa udah selesai Sempro-nya! Satu langkah lebih dekat menuju toga. Semangat terus buat revisian (kalau ada hehe) dan skripsinya. Good job, Anik! 🚀🎓";
+
+        function bukaPesan() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const messageScreen = document.getElementById('message-screen');
+            
+            welcomeScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                messageScreen.style.display = 'block';
+                
+                setTimeout(() => {
+                    messageScreen.style.opacity = '1';
+                    luncurkanConfetti();
+                    ketikPesan();
+                }, 100);
+            }, 500);
+        }
+
+        function luncurkanConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+              if (timeLeft <= 0) return clearInterval(interval);
+              var particleCount = 50 * (timeLeft / duration);
+              
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        function ulangiConfetti() {
+            luncurkanConfetti();
+        }
+
+        function ketikPesan() {
+            const element = document.getElementById('typing-text');
+            let i = 0;
+            element.innerHTML = "";
+            
+            function typeWriter() {
+                if (i < messageText.length) {
+                    element.innerHTML += messageText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            typeWriter();
+        }
+    </script>
+</body>
+</html>
