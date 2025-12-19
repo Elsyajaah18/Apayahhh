@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Sempro Anik!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         /* CSS GABUNGAN */
@@ -38,23 +38,38 @@
 
         .card {
             background: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 500px;
             width: 90%;
             margin: 0 auto 20px;
             border: 2px solid #eaeaea;
+            position: relative; /* Penting untuk posisi confetti */
         }
 
-        h1 { color: #333; margin-bottom: 10px; font-size: 1.5rem; }
-        h2 { color: #e91e63; margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; }
+        /* CSS untuk Dino Nailong */
+        .dino-img {
+            width: 120px; /* Ukuran dino */
+            height: auto;
+            margin-bottom: 10px;
+            /* Sedikit animasi biar munculnya lucu */
+            animation: popUp 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        h1 { color: #333; margin-bottom: 5px; font-size: 1.4rem; font-weight: 600; }
+        h2 { color: #e91e63; margin-bottom: 15px; font-size: 1.1rem; font-weight: 400; }
         
         p {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #555;
             line-height: 1.6;
-            min-height: 80px; /* Space buat teks ngetik */
+            min-height: 70px; /* Space buat teks ngetik */
         }
 
         /* Tombol Utama */
@@ -77,6 +92,7 @@
 
         .btn-repeat {
             background-color: #e91e63;
+            margin-top: 10px;
         }
         
         .btn-repeat:hover {
@@ -84,7 +100,7 @@
         }
 
         .footer {
-            margin-top: 30px;
+            margin-top: 25px;
             color: #888;
             font-size: 0.8rem;
             border-top: 1px solid #eee;
@@ -96,12 +112,14 @@
 
     <div id="welcome-screen" class="container">
         <h1>Hai, Anik Nurul Faradila! 👋</h1>
-        <p style="margin-bottom: 20px;">Ada pesan spesial buat kamu yang habis Sempro nih.</p>
+        <p style="margin-bottom: 20px; font-weight: 300;">Ada pesan spesial buat kamu yang habis Sempro nih.</p>
         <button onclick="bukaPesan()">💌 Buka Pesan</button>
     </div>
 
     <div id="message-screen" class="container hidden">
         <div class="card">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmhiN2xpN2liYTV5aGk3aHZnYXI0aHZnYXI0aHZnYXI0aHZnYXI0JmVwPXR2X3N0aWNrZXJzX2dpZnMmY3Q9cw/TduGoxf26Y6Gj4wI2z/giphy.gif" alt="Dino Lucu" class="dino-img">
+            
             <h1>🎉 Happy Sempro! 🎉</h1>
             <h2>Anik Nurul Faradila</h2>
             <p id="typing-text"></p> <div class="footer">
@@ -115,7 +133,7 @@
 
     <script>
         // JAVASCRIPT GABUNGAN
-        const messageText = "Selamat yaa udah selesai Sempro-nya! Satu langkah lebih dekat menuju toga. Semangat terus buat revisian (kalau ada hehe) dan skripsinya. Good job, Anik! 🚀🎓";
+        const messageText = "Selamat yaa udah selesai Sempro-nya! Aku ngga bisa kasih something but, Semangat terus buat revisian (kalau ada hehe). Semoga di lancarkan terus deh nik! 🚀🎓";
 
         function bukaPesan() {
             const welcomeScreen = document.getElementById('welcome-screen');
@@ -127,6 +145,7 @@
                 welcomeScreen.style.display = 'none';
                 messageScreen.style.display = 'block';
                 
+                // Delay sedikit biar card muncul dulu baru animasinya jalan
                 setTimeout(() => {
                     messageScreen.style.opacity = '1';
                     luncurkanConfetti();
@@ -136,22 +155,13 @@
         }
 
         function luncurkanConfetti() {
-            var duration = 3 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            function randomInRange(min, max) {
-              return Math.random() * (max - min) + min;
-            }
-
-            var interval = setInterval(function() {
-              var timeLeft = animationEnd - Date.now();
-              if (timeLeft <= 0) return clearInterval(interval);
-              var particleCount = 50 * (timeLeft / duration);
-              
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
+            // Confetti lebih heboh di tengah dekat dino
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }, // Muncul agak dari bawah
+                zIndex: 999
+            });
         }
 
         function ulangiConfetti() {
