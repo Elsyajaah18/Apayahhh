@@ -17,19 +17,22 @@
 
         body {
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            height: 100vh;
+            /* Ubah height jadi min-height biar bisa discroll */
+            min-height: 100vh; 
+            /* Hapus overflow: hidden biar scrollbar aktif */
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow: hidden;
+            /* Tambah padding biar gak mepet atas bawah pas di HP kecil */
+            padding: 40px 20px; 
         }
 
         .container {
-            padding: 20px;
+            /* padding container dikurangi karena body sudah ada padding */
+            padding: 10px; 
             transition: opacity 0.5s ease;
             width: 100%;
-            /* Flex biar rapi vertikal */
             display: flex;
             flex-direction: column;
             align-items: center; 
@@ -40,7 +43,7 @@
             opacity: 0;
         }
 
-        /* --- UPDATE STYLE GAMBAR BARU --- */
+        /* --- UPDATE STYLE GAMBAR --- */
         
         /* Style Nailong di Depan */
         .nailong-img {
@@ -70,7 +73,7 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 500px;
-            width: 90%;
+            width: 100%; /* Ubah jadi 100% dari container */
             margin: 0 auto 20px;
             border: 2px solid #eaeaea;
             position: relative;
@@ -106,6 +109,7 @@
             cursor: pointer;
             transition: transform 0.2s, background-color 0.3s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px; /* Jaga jarak bawah */
         }
 
         button:hover {
@@ -143,7 +147,7 @@
 
     <div id="message-screen" class="container hidden">
         <div class="card">
-            <img src="Anik.jpeg" alt="Foto Anik" class="foto-anik">
+            <img src="Anik.jpg" alt="Foto Anik" class="foto-anik">
             
             <h1>🎉 Happy Sempro! 🎉</h1>
             <h2>Anik Nurul Faradila</h2>
@@ -159,7 +163,7 @@
 
     <script>
         // JAVASCRIPT GABUNGAN
-        const messageText = "Selamat yaa atas Sempro-nya! Aku ngga bisa kasih something maaf juga ga langsung ngucapin kemaren hehe but, Semangat terus buat revisian (kalau ada hehe). Semoga di lancarkan terus deh nik! I always support you. 🚀🎓";
+        const messageText = "Selamat yaa udah Sempro! Aku ngga bisa kasih something maaf juga ga langsung ngucapin kemaren hehe but, Semangat terus buat revisian (kalau ada hehe). Semoga di lancarkan terus deh nik! I always support you 🚀🎓";
 
         function bukaPesan() {
             const welcomeScreen = document.getElementById('welcome-screen');
@@ -185,7 +189,8 @@
                 particleCount: 150,
                 spread: 100,
                 origin: { y: 0.6 },
-                zIndex: 999
+                zIndex: 999,
+                disableForReducedMotion: true // Biar gak berat di HP kentang
             });
         }
 
